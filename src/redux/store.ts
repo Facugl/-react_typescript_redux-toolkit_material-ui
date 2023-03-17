@@ -7,6 +7,7 @@ import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
 import authReducer from '@/redux/slices/auth';
+import settingsReducer from '@/redux/slices/settings';
 
 const persistAuthConfig = {
   key: 'auth',
@@ -14,11 +15,21 @@ const persistAuthConfig = {
   whitelist: ['accessToken']
 };
 
+const persistSettingsConfig = {
+  key: 'settings',
+  storage,
+  whitelist: ['themeMode']
+};
+
 export const store = configureStore({
   reducer: {
     auth: persistReducer<ReturnType<typeof authReducer>>(
       persistAuthConfig,
       authReducer
+    ),
+    settings: persistReducer<ReturnType<typeof settingsReducer>>(
+      persistSettingsConfig,
+      settingsReducer
     )
   },
   middleware: (defaultMiddleware) =>
